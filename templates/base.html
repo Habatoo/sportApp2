@@ -25,10 +25,20 @@
             <!-- Collect the nav links, forms, and other content for toggling -->
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                 <ul class="nav navbar-nav">
-                    <li><a href="{{ url_for('users.index')}}">User</a></li>
-                    <li><a href="{{ url_for('posts.index')}}">Posts</a></li>
-                    <li><a href="{{ url_for('events.index')}}">Events</a></li>
 
+                    {% if current_user.is_anonymous %}
+                    <li class="nav-item active ">
+                        <a href="{{ url_for( 'login') }} ">Login</a>
+                    </li>
+                    <li class="nav-item ">
+                        <a class="nav-link " href="{{ url_for( 'register') }} ">Click to register</a>
+                    </li>
+                    {% else %}
+                    <li class="nav-item "><a href="{{ url_for('users.index')}}">User</a></li>
+                    <li class="nav-item "><a href="{{ url_for('posts.index')}}">Posts</a></li>
+                    <li class="nav-item "><a href="{{ url_for('events.index')}}">Events</a></li>
+                    <li class="nav-item "><a class="nav-link " href="{{ url_for( 'logout') }} ">Logout</a></li>
+                    {% endif %}
                 </ul>
                 <form class="navbar-form navbar-left">
                     <div class="form-group">
