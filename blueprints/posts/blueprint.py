@@ -1,7 +1,7 @@
 from flask import Blueprint
 from flask import render_template
 
-from models import Post, Tag
+from models import *
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 

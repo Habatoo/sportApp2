@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 </head>
 
-<body>
+<body onload="GetMap();">
     <nav class="navbar navbar-inverse">
         <div class="container-fluid">
             <!-- Brand and toggle get grouped for better mobile display -->
@@ -61,6 +61,17 @@
                 {% block content_title %} {% endblock %}
             </h2>
             {% block content %} {% endblock %}
+            <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+            <script>
+                function time() {
+                    return parseInt(new Date().getTime() / 1000)
+                }
+                time_u = (time()) / 1300051970
+            </script>
+            <script type="text/javascript" src="static/js/loadopenstreet.js">
+            </script>
+            <!--?{{ time_u }} -->
+            <div id="OSMap" style="position:absolute; width:1000px; height:500px;"></div>
         </div>
     </div>
 </body>
