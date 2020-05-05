@@ -12,10 +12,13 @@ migrations/versions/~*
 
 blueprints/events/__pycache__
 blueprints/events/~*
+blueprints/events/templates/events/~*
 blueprints/posts/__pycache__
 blueprints/posts/~*
+blueprints/posts/templates/posts/~*
 blueprints/users/__pycache__
 blueprints/users/~*
+blueprints/users/templates/users/~*
 
 app/*.pys
 app/~*

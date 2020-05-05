@@ -1,14 +1,13 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, SelectField, RadioField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length
+from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Length, InputRequired
 from wtforms import TextAreaField
+
+from app import app
 from models import *
 
 
-cities = [
-        {'label': 'Novosibirsk', 'value': 'Novosibirsk'},
-        {'label': 'Moscow', 'value': 'Moscow'},
-        ]
+cities = app.config['CITIES']
 
 class LoginForm(FlaskForm):
     email = StringField('Email', validators=[DataRequired()])
@@ -51,7 +50,3 @@ class EditProfileForm(FlaskForm):
             user = User.query.filter_by(username=self.username.data).first()
             if user is not None:
                 raise ValidationError('Please use a different username.')
-
-# class PostForm(FlaskForm):
-#     post = TextAreaField('Say something', validators=[DataRequired(), Length(min=1, max=140)])
-#     submit = SubmitField('Submit')

@@ -16,3 +16,8 @@ class Configuration(object):
     MAIL_ADMIN = os.environ.get('MAIL_ADMIN')
 
     POSTS_PER_PAGE = 2
+
+    CITIES = [
+        {'label': 'Novosibirsk', 'value': 'Novosibirsk'},
+        {'label': 'Moscow', 'value': 'Moscow'},
+        ]
