@@ -1,16 +1,16 @@
-{% extends 'base.html' %} {% block title %} Blueprint user title {% endblock %} {% block content_title %}
+{% extends 'base.html' %} {% block title %} User title {% endblock %} {% block content_title %} {% endblock %} {% block content %}
 <table>
     <tr>
         <td><img src="{{ user.avatar() }}"></td>
         <td>
-            User: {{ current_user.username }}!
+            User: {{ current_user.username }} <br> City: {{ current_user.city }}
         </td>
     </tr>
 </table>
 {% if user.about_me %} About me: {{ user.about_me }} {% endif %}
-<br> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %}
-<hr> {% endblock %} {% block content %} {% for tag in user.tags %}
+<br> {% for tag in user.tags %}
 <span class="label label-primary">{{ tag.name }}</span> {% endfor %}
+<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %}
 <hr> {% if user.username == current_user.username %}
 <p><a href="{{ url_for('users.edit_profile') }}">Edit your profile</a></p>
 {% elif not current_user.is_following(user) %}

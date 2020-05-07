@@ -7,4 +7,6 @@
 <div class="main-content">
     {{ post.body }}
 </div>
-{% endblock %}
+<hr>
+<a href="{{ url_for('posts.edit_post', slug=post.slug)}}">
+    Edit post</a> {% endblock %}

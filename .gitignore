@@ -4,6 +4,8 @@
 *.bat
 *.ipynb
 
+logs/
+
 templates/~*
 migrations/__pycache__
 migrations/~*

@@ -10,5 +10,5 @@ from models import *
 
 class PostForm(FlaskForm):
     title = StringField('Title', validators=[DataRequired()])
-    post = TextAreaField('Say something', validators=[DataRequired()])
+    body = TextAreaField('Say something', validators=[DataRequired()])
     submit = SubmitField('Submit')

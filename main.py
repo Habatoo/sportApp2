@@ -6,6 +6,7 @@ from blueprints.users.blueprint import users
 from blueprints.events.blueprint import events
 
 import view
+import errors
 
 app.register_blueprint(posts, url_prefix='/post')
 app.register_blueprint(users, url_prefix='/user')

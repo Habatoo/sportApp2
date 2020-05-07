@@ -20,20 +20,16 @@
     </p>
 
     <div>
-        {{ form.city.label }}<br> 
-        {% for subfield in form.city %}
-            <div>
-                {{ subfield() }}
-                <span>{{ subfield.label }}</span>
-            </div>
-        {% endfor %}
-
-        {% for error in form.city.errors %}
-            <span style="color: red;">[{{ error }}]</span> 
-        {% endfor %}
+        {{ form.city.label }}<br> {% for subfield in form.city %}
+        <div>
+            {{ subfield() }}
+            <span>{{ subfield.label }}</span>
+        </div>
+        {% endfor %} {% for error in form.city.errors %}
+        <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
     </div>
-    
+
     <p> {{ form.submit(value="REGISTER") }}</p>
 
 </form>
