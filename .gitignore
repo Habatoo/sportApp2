@@ -4,6 +4,8 @@
 *.bat
 *.ipynb
 
+tests.py
+
 logs/
 
 templates/~*

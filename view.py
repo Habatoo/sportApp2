@@ -19,7 +19,15 @@ def before_request():
 @login_required
 def index():
     user = User.query.filter_by(username=current_user.username).first_or_404()
-    return render_template("index.html", title='Home Page', user=user)
+    page = request.args.get('page', 1, type=int)
+    posts = current_user.followed_posts().paginate(
+    page, app.config['POSTS_PER_PAGE'], False)
+    next_url = url_for('index', username=user.username, page=posts.next_num) \
+        if posts.has_next else None
+    prev_url = url_for('index', username=user.username, page=posts.prev_num) \
+        if posts.has_prev else None
+    return render_template('index.html', user=user, posts=posts.items,
+                           next_url=next_url, prev_url=prev_url)
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

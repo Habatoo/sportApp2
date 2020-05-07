@@ -3,18 +3,20 @@
     <tr>
         <td><img src="{{ user.avatar() }}"></td>
         <td>
-            User: {{ current_user.username }} <br> City: {{ current_user.city }}
+            User: {{ user.username }} <br> City: {{ user.city }}
         </td>
     </tr>
 </table>
 {% if user.about_me %} About me: {{ user.about_me }} {% endif %}
 <br> {% for tag in user.tags %}
 <span class="label label-primary">{{ tag.name }}</span> {% endfor %}
+<p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
+
 <hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %}
 <hr> {% if user.username == current_user.username %}
 <p><a href="{{ url_for('users.edit_profile') }}">Edit your profile</a></p>
 {% elif not current_user.is_following(user) %}
-<p><a href="{{ url_for('follow', username=user.username) }}">Be friend</a></p>
+<p><a href="{{ url_for('users.follow', username=user.username) }}">Be friend</a></p>
 {% else %}
-<p><a href="{{ url_for('unfollow', username=user.username) }}">Unfriend</a></p>
+<p><a href="{{ url_for('users.unfollow', username=user.username) }}">Unfriend</a></p>
 {% endif %} {% endblock %}
