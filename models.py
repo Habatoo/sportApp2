@@ -61,6 +61,7 @@ class User(UserMixin, db.Model):
 
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
+    events = db.relationship('Event', backref='event_author', lazy='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -136,6 +137,7 @@ class Event(db.Model):
     # https://overpass-api.de/api/interpreter
     id = db.Column(db.Integer, primary_key=True)
     event_title = db.Column(db.String(140))
+    event_body = db.Column(db.Text)
     slug = db.Column(db.String(140), unique=True)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     
@@ -144,15 +146,22 @@ class Event(db.Model):
     event_geo = db.Column(db.Text)
 
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
-    event_crew = db.Column(db.Integer, db.ForeignKey('user.id'))
+    event_crew = db.Column(db.Text)
 
     def __init__(self, *args, **kwargs):
-        super(Post, self).__init__(*args, **kwargs)
+        super(Event, self).__init__(*args, **kwargs)
         self.generate_slug()
 
     def generate_slug(self):
-        if self.title:
-            self.slug = slugify(self.title + str(int(time())))
+        if self.event_title:
+            self.slug = slugify(self.event_title + str(int(time())))
+
+    # def check_date(self, *args, **kwargs):
+    #     if not self.event_time:
+    #         raise ValidationError("Event time missing. Please check the data")
+    #     if not self.created >= self.event_time:
+    #         raise ValidationError("Event time must be greater than now")
+    #     super().check_date(*args, **kwargs)
 
 #### FLASK SECURIT
 class Role(db.Model, RoleMixin):

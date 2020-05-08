@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: 3146c754aa9f
+Revision ID: f62fd7f30efd
 Revises: 
-Create Date: 2020-05-07 19:33:05.499488
+Create Date: 2020-05-08 17:01:18.284102
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '3146c754aa9f'
+revision = 'f62fd7f30efd'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -51,14 +51,14 @@ def upgrade():
     op.create_table('event',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('event_title', sa.String(length=140), nullable=True),
+    sa.Column('event_body', sa.Text(), nullable=True),
     sa.Column('slug', sa.String(length=140), nullable=True),
     sa.Column('created', sa.DateTime(), nullable=True),
     sa.Column('event_time', sa.DateTime(), nullable=True),
     sa.Column('event_place', sa.Text(), nullable=True),
     sa.Column('event_geo', sa.Text(), nullable=True),
     sa.Column('event_starter', sa.Integer(), nullable=True),
-    sa.Column('event_crew', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['event_crew'], ['user.id'], ),
+    sa.Column('event_crew', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['event_starter'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('slug')

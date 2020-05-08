@@ -6,6 +6,8 @@ from flask_script import Manager
 
 from flask_admin import Admin
 from flask_admin.contrib.sqla import ModelView
+from flask_mail import Mail
+from flask_moment import Moment
 
 import logging
 from logging.handlers import SMTPHandler, RotatingFileHandler
@@ -22,6 +24,8 @@ app = Flask(__name__)
 app.config.from_object(Configuration)
 
 db  = SQLAlchemy(app)
+mail = Mail(app)
+moment = Moment(app)
 
 migrate = Migrate(app, db)
 manager = Manager(app)

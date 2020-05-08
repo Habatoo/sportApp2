@@ -1,1 +1,54 @@
-{% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} Blueprint event index page {% endblock %} {% block content %} Blueprint event content {% endblock %}
+{% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} All events page {% endblock %} {% block content %} {% for event in pages.items %}
+<div class="main-content">
+    <table>
+        <tr>
+            <td><img src="{{ event.event_author.avatar() }}"></td>
+            <td><a href="{{ url_for('user', username=event.event_author.username) }}">
+                {{ event.event_author.username }}</a> {{ event.created }} make event :
+                <br>
+                <a href="">{{ event.event_title }}</a>
+                <br> {{ event.event_body }}
+            </td>
+        </tr>
+    </table>
+</div>
+<br> {% endfor %}
+<nav>
+    <ul class="pagination">
+        <li {% if not pages.has_prev %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.prev_num }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span></a>
+        </li>
+        {% for page in pages.iter_pages() %}
+        <li {% if page==pages.page %} class="active" {% endif %}><a href="./?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+        <li {% if not pages.has_next %} class="disabled" {% endif %}>
+            <a href="./?page={{ pages.next_num }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
+</nav>
+
+<div>
+    {% if form %}
+    <form action="" method="post">
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.event_title.label(class='control-label') }}<br> {{ form.event_title(class='form-control') }}<br> {% for error in form.event_title.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.event_body.label(class='control-label') }}<br> {{ form.event_body(class='form-control') }}<br> {% for error in form.event_body.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_time.label(class='control-label') }}<br> {{ form.event_time(class='form-control') }}<br> {% for error in form.event_time.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+
+            <br> {{ form.event_place.label(class='control-label') }} {{ form.event_place(class='form-control') }}<br> {% for error in form.event_place.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.event_geo.label(class='control-label') }}<br> {{ form.event_geo(class='form-control') }}<br> {% for error in form.event_geo.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+    </form>
+    {% endif %}
+</div>
+{% endblock %}
