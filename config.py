@@ -8,8 +8,7 @@ class Configuration(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # SECURITY_PASSWORD_SALT = 'salt'
-    # SECURITY_PASSWORD_HASH = 'sha512_crypt'
+    LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     
     MAIL_SERVER = 'localhost' or os.environ.get('MAIL_SERVER')
     MAIL_PORT = 8025 or int(os.environ.get('MAIL_PORT') or 25)

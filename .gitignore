@@ -22,7 +22,10 @@ blueprints/posts/~*
 blueprints/posts/templates/posts/~*
 blueprints/users/__pycache__
 blueprints/users/~*
-blueprints/users/templates/users/~*
+blueprints/photos/templates/photos/~*
+blueprints/photos/__pycache__
+blueprints/photos/~*
+blueprints/photos/templates/photos/~*
 
 app/*.pys
 app/~*
