@@ -9,14 +9,96 @@
 </table>
 {% if user.about_me %} About me: {{ user.about_me }} {% endif %}
 <br> {% for tag in user.tags %}
-<span class="label label-primary">{{ tag.name }}</span> {% endfor %}
+<a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
+    <span class="label label-primary">
+        {{ tag.name }}
+    </span>
+</a> {% endfor %}
 <p>{{ user.followers.count() }} followers, {{ user.followed.count() }} following.</p>
 
-<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %}
-<hr> {% if user.username == current_user.username %}
+<hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% if user.username == current_user.username %}
 <p><a href="{{ url_for('users.edit_profile') }}">Edit your profile</a></p>
 {% elif not current_user.is_following(user) %}
 <p><a href="{{ url_for('users.follow', username=user.username) }}">Be friend</a></p>
 {% else %}
 <p><a href="{{ url_for('users.unfollow', username=user.username) }}">Unfriend</a></p>
-{% endif %} {% endblock %}
+{% endif %}
+
+<hr>
+<h3>{{user.username}} posts:</h3>
+{% for post in pages.items %}
+<div class="main-content">
+    <table>
+        <tr>
+            <td><img src="{{ post.author.avatar() }}"></td>
+            <td><a href="{{ url_for('user', username=post.author.username) }}">
+                {{ post.author.username }}</a> {{ post.created }} says :
+                <br>
+                <a href="{{ url_for('posts.post_detail', slug=post.slug) }}">{{ post.title }}</a>
+                <br> {{ post.body }}
+                <div class="tags">
+                    tags: {% for tag in post.tags %}
+                    <a href="{{ url_for('posts.tag_detail', slug=tag.slug) }}">
+                        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<br> {% endfor %}
+<nav>
+    <ul class="pagination">
+        <li {% if not pages.has_prev %} class="disabled" {% endif %}>
+            <a href="./{{user.username}}?page={{ pages.prev_num }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span></a>
+        </li>
+        {% for page in pages.iter_pages() %}
+        <li {% if page==pages.page %} class="active" {% endif %}>
+            <a href="./{{user.username}}?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+        <li {% if not pages.has_next %} class="disabled" {% endif %}>
+            <a href="./{{user.username}}?page={{ pages.next_num }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
+</nav>
+
+<hr>
+<h3>{{user.username}} events:</h3>
+{% for event in event_pages.items %}
+<div class="main-content">
+    <table>
+        <tr>
+            <td><img src="{{ event.event_author.avatar() }}"></td>
+            <td><a href="{{ url_for('user', username=event.event_author.username) }}">
+                {{ event.event_author.username }}</a> {{ event.created }} says :
+                <br>
+                <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
+                <br> {{ event.event_body }}
+                <div class="tags">
+                    tags: {% for tag in event.tags %}
+                    <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
+                        <span class="label label-primary">{{ tag.name }}</span></a> {% endfor %}
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
+<br> {% endfor %}
+<nav>
+    <ul class="pagination">
+        <li {% if not pages.has_prev %} class="disabled" {% endif %}>
+            <a href="./{{user.username}}?page={{ pages.prev_num }}" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span></a>
+        </li>
+        {% for page in event_pages.iter_pages() %}
+        <li {% if page==event_pages.page %} class="active" {% endif %}>
+            <a href="./{{user.username}}?page={{ page }}">{{page}} <span class="sr-only">(current)</span></a></li>
+        {% endfor %}
+        <li {% if not pages.has_next %} class="disabled" {% endif %}>
+            <a href="./{{user.username}}?page={{ pages.next_num }}" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span></a>
+        </li>
+    </ul>
+</nav>
+{% endblock %}

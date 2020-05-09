@@ -25,8 +25,11 @@ def edit_post(slug):
     form = PostForm(formdata=request.form, obj=post)
 
     if form.validate_on_submit():
-        form.populate_obj(post)
+        # form.populate_obj(post)
+        post.title = form.title.data
+        post.body = form.body.data
         try:
+            post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()
             flash('Your post edited')
             return redirect(url_for('posts.post_detail', slug=post.slug))
@@ -40,14 +43,19 @@ def edit_post(slug):
 def index():
     form = PostForm()
     if form.validate_on_submit():
-        post = Post(title=form.title.data, body=form.body.data, author=current_user)
+        post = Post(
+            title=form.title.data, 
+            body=form.body.data, 
+            author=current_user, 
+            )
         try:
+            post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.add(post)
             db.session.commit()
             flash('Your post is now live!')
             return redirect(url_for('posts.index'))
         except:
-            redirect('posts.create') 
+            redirect('posts.index') 
 
     q = request.args.get('q')
     page = request.args.get('page')
@@ -69,12 +77,12 @@ def index():
 def post_detail(slug):
     post = Post.query.filter(Post.slug==slug).first()
     tags = post.tags
-    return render_template('posts/post_detail.html', post=post, tags=tags)
+    return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)
 
 @posts.route('/tag/<slug>')
 @login_required
 def tag_detail(slug):
     tag = Tag.query.filter(Tag.slug==slug).first()
-    posts = tag.posts.all()
+    posts = tag.posts_tags.all()
     return render_template('posts/tag_detail.html', tag=tag, posts=posts)
 

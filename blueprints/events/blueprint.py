@@ -18,6 +18,28 @@ from models import *
 
 events = Blueprint('events', __name__, template_folder='templates')
 
+@events.route('/<slug>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_event(slug):
+    event = Event.query.filter(Event.slug==slug).first()
+    form = EventForm(formdata=request.form, obj=event)
+
+    if form.validate_on_submit():
+        event_title=form.event_title.data, 
+        event_body=form.event_body.data, 
+        event_time= form.event_time.data,
+        event_place = form.event_place.data,
+        event_geo = form.event_geo.data,
+        try:
+            event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+            db.session.commit()
+            flash('Your event edited')
+            return redirect(url_for('events.post_detail', slug=event.slug))
+        except:
+           redirect('events.index') 
+    form = EventForm(obj=event)
+    return render_template('events/edit_event.html', form=form)
+
 @events.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -30,13 +52,13 @@ def index():
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
             event_author=current_user)
-        try:
-            db.session.add(event)
-            db.session.commit()
-            flash('Your cane make event!')
-            return redirect(url_for('events.index'))
-        except:
-            redirect('index') # create!!!
+        #try:
+        event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+        db.session.commit()
+        flash('Your cane make event!')
+        return redirect(url_for('events.index'))
+        #except:
+        #    redirect('index') # create!!!
 
     q = request.args.get('q')
     page = request.args.get('page')
@@ -54,62 +76,16 @@ def index():
     return render_template('events/index.html', form=form, pages=pages)
 
 
-# @posts.route('/<slug>/edit', methods=['GET', 'POST'])
-# @login_required
-# def edit_post(slug):
-#     post = Post.query.filter(Post.slug==slug).first()
-#     form = PostForm(formdata=request.form, obj=post)
+@events.route('/<slug>')
+@login_required
+def event_detail(slug):
+    event = Event.query.filter(Event.slug==slug).first()
+    tags = event.tags
+    return render_template('events/event_detail.html', event=event, tags=tags)
 
-#     if form.validate_on_submit():pages=pages
-#         form.populate_obj(post)
-#         try:
-#             db.session.commit()
-#             flash('Your post edited')
-#             return redirect(url_for('posts.post_detail', slug=post.slug))
-#         except:
-#            redirect('posts.index') 
-#     form = PostForm(obj=post)
-#     return render_template('posts/edit_post.html', form=form)
-
-# @posts.route('/', methods=['GET', 'POST'])
-# @login_required
-# def index():
-#     form = PostForm()
-#     if form.validate_on_submit():
-#         post = Post(title=form.title.data, body=form.body.data, author=current_user)
-#         try:
-#             db.session.add(post)
-#             db.session.commit()
-#             flash('Your post is now live!')
-#             return redirect(url_for('posts.index'))
-#         except:
-#             redirect('posts.create') 
-
-#     q = request.args.get('q')
-#     page = request.args.get('page')
-#     if page and page.isdigit():
-#         page = int(page) 
-#     else:
-#         page = 1 
-#     if q:
-#         posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
-#     else:
-#         posts = Post.query.order_by(Post.created.desc())
-        
-#     pages = posts.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
-#     # max pages = posts.count() or 404
-#     return render_template('posts/index.html', form=form, pages=pages)
-
-# @posts.route('/<slug>')
-# @login_required
-# def post_detail(slug):
-#     post = Post.query.filter(Post.slug==slug).first()
-#     tags = post.tags
-#     return render_template('posts/post_detail.html', post=post, tags=tags)
-
-# @posts.route('/tag/<slug>')
-# @login_required
-# def tag_detail(slug):
-#     tag = Tag.query.filter(Tag.slug==slug).first()
-#     posts = tag.posts.all()
-#     return render_template('posts/tag_detail.html', tag=tag, posts=posts)
+@events.route('/tag/<slug>')
+@login_required
+def tag_detail(slug):
+    tag = Tag.query.filter(Tag.slug==slug).first()
+    events = tag.events_tags.all()
+    return render_template('events/tag_detail.html', tag=tag, events=events)

@@ -8,9 +8,5 @@ from app import app
 from models import *
 
 
-class PostForm(FlaskForm):
-    title = StringField('Title', validators=[DataRequired()])
-    body = TextAreaField('Say something', validators=[DataRequired()])
-    tags = RadioField(
-        'Select tags', choices=[(tag.name, tag.slug) for tag in Tag.query.all()], validators=[DataRequired()])
-    submit = SubmitField('Submit')
+class PhotoForm(FlaskForm):
+    pass

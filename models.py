@@ -29,6 +29,18 @@ user_tags = db.Table(
     db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
 )
 
+event_tags = db.Table(
+    'event_tags', 
+    db.Column('event_id', db.Integer, db.ForeignKey('event.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
+photo_tags = db.Table(
+    'photo_tags', 
+    db.Column('photo_id', db.Integer, db.ForeignKey('photo.id')),
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'))
+)
+
 followers = db.Table('followers',
     db.Column('follower_id', db.Integer, db.ForeignKey('user.id')),
     db.Column('followed_id', db.Integer, db.ForeignKey('user.id'))
@@ -54,14 +66,15 @@ class User(UserMixin, db.Model):
     active = db.Column(db.Boolean)
     
     tags = db.relationship(
-        'Tag', secondary=user_tags, backref=db.backref('users', lazy='dynamic'))
+        'Tag', secondary=user_tags, backref=db.backref('users_tags', lazy='dynamic'))
 
     roles = db.relationship(
-        'Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+        'Role', secondary=roles_users, backref=db.backref('users_roles', lazy='dynamic'))
 
 
     posts = db.relationship('Post', backref='author', lazy='dynamic')
     events = db.relationship('Event', backref='event_author', lazy='dynamic')
+    photos = db.relationship('Photo', backref='photo_author', lazy='dynamic')
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password)
@@ -106,7 +119,7 @@ class Post(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
 
     tags = db.relationship(
-        'Tag', secondary=post_tags, backref=db.backref('posts', lazy='dynamic'))
+        'Tag', secondary=post_tags, backref=db.backref('posts_tags', lazy='dynamic'))
 
     def __init__(self, *args, **kwargs):
         super(Post, self).__init__(*args, **kwargs)
@@ -148,6 +161,9 @@ class Event(db.Model):
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
     event_crew = db.Column(db.Text)
 
+    tags = db.relationship(
+        'Tag', secondary=event_tags, backref=db.backref('events_tags', lazy='dynamic'))
+
     def __init__(self, *args, **kwargs):
         super(Event, self).__init__(*args, **kwargs)
         self.generate_slug()
@@ -162,6 +178,26 @@ class Event(db.Model):
     #     if not self.created >= self.event_time:
     #         raise ValidationError("Event time must be greater than now")
     #     super().check_date(*args, **kwargs)
+
+class Photo(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    photo_tittle = db.Column(db.String(100), unique=True)
+    photo_description = db.Column(db.String(255))
+    slug = db.Column(db.String(140), unique=True)
+    created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
+
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    tags = db.relationship(
+        'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
+
+    def __init__(self, *args, **kwargs):
+        super(Photo, self).__init__(*args, **kwargs)
+        self.generate_slug()
+
+    def generate_slug(self):
+        if self.photo_title:
+            self.slug = slugify(self.photo_title + str(int(time())))
+
 
 #### FLASK SECURIT
 class Role(db.Model, RoleMixin):

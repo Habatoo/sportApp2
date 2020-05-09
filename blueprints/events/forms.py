@@ -16,6 +16,8 @@ class EventForm(FlaskForm):
         'Which date is your favorite?', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
     event_place = TextAreaField('Place, adress', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
+    tags = RadioField(
+        'Select tags', choices=[(tag.name, tag.slug) for tag in Tag.query.all()], validators=[DataRequired()])
     submit = SubmitField('Submit')
 
     # id = db.Column(db.Integer, primary_key=True)

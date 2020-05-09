@@ -38,6 +38,7 @@
                     <li class="nav-item "><a href="{{ url_for('user', username=current_user.username)}}">Profile</a></li>
                     <li class="nav-item "><a href="{{ url_for('posts.index')}}">Posts</a></li>
                     <li class="nav-item "><a href="{{ url_for('events.index')}}">Events</a></li>
+                    <li class="nav-item "><a href="{{ url_for('photos.index')}}">Photos</a></li>
                     <li class="nav-item "><a class="nav-link " href="{{ url_for( 'logout') }} ">Logout</a></li>
                     {% endif %}
                 </ul>
@@ -56,12 +57,14 @@
         </div>
         <!-- /.container-fluid -->
     </nav>
+
     <div class="container">
         <div class="row">
             <h2>
                 {% block content_title %} {% endblock %}
             </h2>
             {% block content %} {% endblock %}
+            <!-- 
             <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
             <script>
                 function time() {
@@ -71,10 +74,11 @@
             </script>
             <script type="text/javascript" src="static/js/loadopenstreet.js">
             </script>
-            <!--?{{ time_u }} -->
             <div id="OSMap" style="position:absolute; width:1000px; height:500px;"></div>
+               -->
         </div>
     </div>
+
 
 </body>
 
