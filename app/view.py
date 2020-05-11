@@ -2,11 +2,11 @@ from datetime import datetime
 from werkzeug.urls import url_parse
 
 from flask import render_template, flash, redirect, url_for, request
-from forms import LoginForm, RegistrationForm
+from app.forms import LoginForm, RegistrationForm
 from flask_login import login_user, logout_user, current_user, login_required
 
 from app import app, db
-from models import *
+from app.models import *
 
 @app.before_request
 def before_request():

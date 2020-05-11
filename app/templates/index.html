@@ -1,7 +1,9 @@
 {% extends 'base.html' %} {% block title %} Index page title {% endblock %} {% block content_title %}
 <h3>Hi, {{ current_user.username }}!</h3>
 {% endblock %} {% block content %} {% for tag in user.tags %}
-<span class="label label-primary">{{ tag.name }}</span> {% endfor %}
+<a href="{{ url_for('users.tag_detail', slug=tag.slug) }}">
+    <span class="label label-primary">{{ tag.name }}</span></a>
+{% endfor %}
 
 <br>
 <hr> {% if user.last_seen %} Last seen on: {{ user.last_seen }} {% endif %} {% endblock %}

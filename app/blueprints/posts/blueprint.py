@@ -14,7 +14,7 @@ from .forms import PostForm
 
 from app import app
 from app import db
-from models import *
+from app.models import *
 
 posts = Blueprint('posts', __name__, template_folder='templates')
 

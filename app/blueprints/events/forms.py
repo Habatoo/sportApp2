@@ -5,8 +5,8 @@ from wtforms.fields.html5 import DateTimeField
 
 from flask_wtf import FlaskForm
 
+from app.models import *
 from app import app
-from models import *
 
 
 class EventForm(FlaskForm):

@@ -14,7 +14,7 @@ from .forms import EventForm
 
 from app import app
 from app import db
-from models import *
+from app.models import *
 
 events = Blueprint('events', __name__, template_folder='templates')
 

@@ -43,7 +43,7 @@ if not app.debug:
         if app.config['MAIL_USE_TLS']:
             secure = ()
         mail_handler = SMTPHandler(
-            mailhost=(app.config['MAIL_SERVER'], app.config['MAIL_PORT']),
+            mailhost=(app.config['MAIL_SERVER'], app.context_processorapp.config['MAIL_PORT']),
             fromaddr='no-reply@' + app.config['MAIL_SERVER'],
             toaddrs=app.config['ADMINS'], subject='sportApp',
             credentials=auth, secure=secure)
@@ -63,8 +63,23 @@ if not app.debug:
     app.logger.setLevel(logging.INFO)
     app.logger.info('sportApp')
 
-#### ADMIN ####
-from models import *
+
+from app.models import *
+from app import view
+from app import errors
+
+from .blueprints.posts.blueprint import posts
+from .blueprints.users.blueprint import users
+from .blueprints.events.blueprint import events
+from .blueprints.photos.blueprint import photos
+
+app.register_blueprint(posts, url_prefix='/post')
+app.register_blueprint(users, url_prefix='/user')
+app.register_blueprint(events, url_prefix='/event')
+app.register_blueprint(photos, url_prefix='/photo')
+
+
+# #### ADMIN ####
 admin = Admin(app)
 admin.add_view(ModelView(Post, db.session))
 admin.add_view(ModelView(User, db.session))

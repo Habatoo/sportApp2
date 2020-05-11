@@ -6,6 +6,8 @@
 
 tests.py
 
+venv/
+
 logs/
 
 templates/~*

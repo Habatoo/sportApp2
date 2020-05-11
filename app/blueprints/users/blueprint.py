@@ -4,7 +4,8 @@ from flask_login import login_user, logout_user, current_user, login_required
 from .forms import EditProfileForm
 
 from app import app
-from models import *
+from app import db
+from app.models import *
 
 users = Blueprint('users', __name__, template_folder='templates')
 

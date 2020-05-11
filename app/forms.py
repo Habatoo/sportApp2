@@ -4,7 +4,7 @@ from wtforms.validators import ValidationError, DataRequired, Email, EqualTo, Le
 from wtforms import TextAreaField
 
 from app import app
-from models import *
+from app.models import *
 
 
 cities = app.config['CITIES']

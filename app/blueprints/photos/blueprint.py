@@ -14,7 +14,7 @@ from .forms import PhotoForm
 
 from app import app
 from app import db
-from models import *
+from app.models import *
 
 photos = Blueprint('photos', __name__, template_folder='templates')
 

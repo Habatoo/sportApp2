@@ -4,8 +4,9 @@ from wtforms import TextAreaField
 
 from flask_wtf import FlaskForm
 
+
+from app.models import *
 from app import app
-from models import *
 
 cities = app.config['CITIES']
 tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
