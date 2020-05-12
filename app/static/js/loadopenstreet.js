@@ -32,7 +32,7 @@
     map.events.register('click', map, function(e) {
         var size = new OpenLayers.Size(25, 25); //размер картинки для маркера
         var offset = new OpenLayers.Pixel(-(size.w / 2), -size.h); //смещение картинки для маркера
-        var icon = new OpenLayers.Icon('static/img/smiles.png', size, offset); //картинка для маркера
+        var icon = new OpenLayers.Icon('static/img/icons/smiles.png', size, offset); //картинка для маркера
         layerMarkers.addMarker( //добавляем маркер к слою маркеров
             new OpenLayers.Marker(map.getLonLatFromViewPortPx(e.xy), //координаты вставки маркера
                 icon)); //иконка маркера

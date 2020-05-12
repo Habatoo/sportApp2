@@ -1,5 +1,6 @@
 from datetime import datetime
 from werkzeug.urls import url_parse
+import os
 
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm
@@ -7,6 +8,7 @@ from flask_login import login_user, logout_user, current_user, login_required
 
 from app import app, db
 from app.models import *
+from app.copydir import copydir
 
 @app.before_request
 def before_request():
@@ -63,9 +65,19 @@ def register():
             city=form.city.data
             )
         user.set_password(form.password.data)
-        db.session.add(user)
         try:
+            db.session.add(user)
             db.session.commit()
+            new_user = User.query.filter(User.username == form.username.data).first()
+            #print('dir', app.config['DATA_DIR'])          
+            user_dir = new_user.username + new_user.timestamp
+            user_folders = os.path.join(app.config['DATA_DIR'], user_dir)
+            if not os.path.isdir(user_folders):
+                os.mkdir(user_folders)
+                os.mkdir(os.path.join(user_folders, 'photos'))
+                os.mkdir(os.path.join(user_folders, 'tracking_data'))
+            #print('user_folders', user_folders)
+            copydir(os.path.join(app.config['DATA_DIR'], 'avatar'), user_folders)
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('login'))
         except:

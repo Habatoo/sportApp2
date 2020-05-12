@@ -60,22 +60,33 @@
 
     <div class="container">
         <div class="row">
-            <h2>
-                {% block content_title %} {% endblock %}
-            </h2>
-            {% block content %} {% endblock %}
-            <!-- 
-            <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-            <script>
-                function time() {
-                    return parseInt(new Date().getTime() / 1000)
-                }
-                time_u = (time()) / 1300051970
-            </script>
-            <script type="text/javascript" src="static/js/loadopenstreet.js">
-            </script>
-            <div id="OSMap" style="position:absolute; width:1000px; height:500px;"></div>
-               -->
+            <table>
+                <tr>
+                    <td>
+                        <h2>
+                            {% block content_title %} {% endblock %}
+                        </h2>
+                        {% block content %} {% endblock %}
+                    </td>
+                    <td valign="top">
+                        <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+                        <script>
+                            function time() {
+                                return parseInt(new Date().getTime() / 1000)
+                            }
+                            time_u = (time()) / 1300051970
+                        </script>
+                        <script type="text/javascript" src="{{ url_for('static', filename='js/loadopenstreet.js') }}">
+                        </script>
+                        <div id="OSMap" style="position:absolute; width:900px; height:500px;"></div>
+                    </td>
+                </tr>
+            </table>
+
+
+
+
+            <!--  -->
         </div>
     </div>
 

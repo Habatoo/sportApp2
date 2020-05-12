@@ -1,12 +1,13 @@
 from datetime import datetime
 from time import time
 import re
+import os
 
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask_security import RoleMixin
 
-from app import login, db
+from app import app, login, db
 
 @login.user_loader
 def load_user(id):
@@ -82,7 +83,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self):
-        return '{}'.format(self.username + self.timestamp + '/')
+        avatar_url = os.path.join('user_data', self.username + self.timestamp, 'avatar\\avatar.png')
+        # return '{}'.format(avatar_url)
+        return avatar_url
     
     followed = db.relationship(
         'User', secondary=followers, 

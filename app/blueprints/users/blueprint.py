@@ -1,5 +1,5 @@
 from flask import Blueprint
-from flask import render_template, flash, redirect, url_for, request
+from flask import render_template, flash, redirect, url_for, request, send_from_directory
 from flask_login import login_user, logout_user, current_user, login_required
 from .forms import EditProfileForm
 

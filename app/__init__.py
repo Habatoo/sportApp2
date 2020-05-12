@@ -17,11 +17,11 @@ from time import time
 #from flask_security import SQLAlchemySessionUserDatastore
 #from flask_security import Security
 
-from config import Configuration
+from config import config
 
 
 app = Flask(__name__)
-app.config.from_object(Configuration)
+app.config.from_object(config.get('default'))
 
 db  = SQLAlchemy(app)
 mail = Mail(app)
