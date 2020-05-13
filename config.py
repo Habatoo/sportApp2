@@ -9,6 +9,8 @@ class Configuration(object):
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    # MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+
 
 
 class DevConfig(Configuration):

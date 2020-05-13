@@ -2,7 +2,7 @@
 <div class="main-content">
     <table>
         <tr>
-            <td><img src="{{ event.event_author.avatar() }}"></td>
+            <td><img src="{{ url_for('static', filename=event.event_author.avatar()) }}" width="30" height="30" alt="avatar"></td>
             <td><a href="{{ url_for('user', username=event.event_author.username) }}">
                 {{ event.event_author.username }}</a> {{ event.created }} make event :
                 <br>

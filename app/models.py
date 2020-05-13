@@ -83,9 +83,9 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
 
     def avatar(self):
-        avatar_url = os.path.join('user_data', self.username + self.timestamp, 'avatar\\avatar.png')
-        # return '{}'.format(avatar_url)
-        return avatar_url
+        #avatar_url = os.path.join('user_data', self.username + self.timestamp, 'avatar\\avatar.png')
+        #return avatar_url
+        return 'user_data/{}/avatar/avatar.png'.format(self.username + self.timestamp)
     
     followed = db.relationship(
         'User', secondary=followers, 

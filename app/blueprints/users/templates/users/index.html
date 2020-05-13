@@ -1,7 +1,7 @@
 {% extends 'base.html' %} {% block title %} User title {% endblock %} {% block content_title %} {% endblock %} {% block content %}
 <table>
     <tr>
-        <td><img style='border:1px solid #000000' src="{{ url_for('static', filename='user_data/avatar/avatar/avatar.png') }}">
+        <td><img src="{{ url_for('static', filename=user.avatar()) }}" width="60" height="60" alt="avatar" />
         </td>
         <td>
             User: {{ user.username }} <br> City: {{ user.city }}
@@ -31,7 +31,7 @@
 <div class="main-content">
     <table>
         <tr>
-            <td><img style='border:1px solid #000000' src="{{ post.author.avatar() }}" /></td>
+            <td><img src="{{ url_for('static', filename=post.author.avatar()) }}" width="30" height="30" alt="avatar" /></td>
             <td><a href="{{ url_for('user', username=post.author.username) }}">
                 {{ post.author.username }}</a> {{ post.created }} says :
                 <br>
