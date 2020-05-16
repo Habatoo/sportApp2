@@ -4,8 +4,8 @@ from wtforms import TextAreaField, SelectMultipleField
 
 from flask_wtf import FlaskForm
 
-from app.models import *
 from app import app
+from app.models import *
 
 
 class PhotoForm(FlaskForm):

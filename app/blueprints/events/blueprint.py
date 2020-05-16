@@ -34,7 +34,7 @@ def edit_event(slug):
             event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()
             flash('Your event edited')
-            return redirect(url_for('events.post_detail', slug=event.slug))
+            return redirect(url_for('events.event_detail', slug=event.slug))
         except:
            redirect('events.index') 
     form = EventForm(obj=event)
@@ -62,10 +62,11 @@ def index():
 
     q = request.args.get('q')
     page = request.args.get('page')
-    if page and page.isdigit():
-        page = int(page) 
-    else:
-        page = 1 
+    page = request.args.get('page', 1, type=int)
+    # if page and page.isdigit():
+    #     page = int(page) 
+    # else:
+    #     page = 1 
     if q:
         events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())
     else:

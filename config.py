@@ -1,4 +1,7 @@
 import os
+import urllib
+import psycopg2
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 class Configuration(object):
@@ -6,7 +9,12 @@ class Configuration(object):
     DEVELOPMENT = False
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+       'sqlite:///' + os.path.join(basedir, 'app.db')
+    # try:
+    #     SQLALCHEMY_DATABASE_URI = r'postgres://qkwtzbjxghqiyw:4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1@ec2-54-88-130-244.compute-1.amazonaws.com:5432/d2pcjnksf487v1'
+    # except:
+    #     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
+    #         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # MAX_CONTENT_LENGTH = 16 * 1024 * 1024
@@ -18,7 +26,14 @@ class DevConfig(Configuration):
     DEVELOPMENT = True
     DEBUG = True
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-        'sqlite:///' + os.path.join(basedir, 'app.db')
+       'sqlite:///' + os.path.join(basedir, 'app.db')
+
+
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
+    # params = urllib.parse.quote_plus(
+    #     r'DRIVER={SQL Server};SERVER=ec2-54-88-130-244.compute-1.amazonaws.com;DATABASE=d2pcjnksf487v1;UID=qkwtzbjxghqiyw;PWD=4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1;')
+    # SQLALCHEMY_DATABASE_URI = r'postgres://qkwtzbjxghqiyw:4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1@ec2-54-88-130-244.compute-1.amazonaws.com:5432/d2pcjnksf487v1'
+    SECRET_KEY = 'something very secret'
 
     DATA_DIR = os.environ.get('DATA_DIR') or os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app\\static\\user_data\\') # 
 
