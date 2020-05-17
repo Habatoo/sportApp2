@@ -44,24 +44,23 @@ def index():
             # args['method'] = 'POST'
             destination = '/'.join([user_folders, filename])
             file.save(destination)
+
+            photo = Photo(
+            photo_title='', 
+            photo_description='', 
+            slug='user_data/{}/{}/{}'.format(user_dir, 'photos', filename),
+            photo_author=current_user, 
+            )
+            db.session.add(photo)
+            db.session.commit()
+
         return redirect(url_for('photos.index'))
     return render_template('photos/index.html', args=args, files_path=files_path, img_url=img_url)
     
 
-@photos.route('/upload', methods=['GET', 'POST'])
+@photos.route('/<slug>')
 @login_required
-def upload():
-    # target = os.path.join(app.config['DATA_DIR'], 'images/')
-    # if not os.path.isdir(target):
-    #     os.mkdir(target)
-
-    user = User.query.filter(User.username == current_user.username).first()
-    #print('dir', app.config['DATA_DIR'])          
-    user_dir = user.username + user.timestamp
-    user_folders = os.path.join(app.config['DATA_DIR'], user_dir, 'photos')
-
-    for file in request.files.getlist('file'):
-        filename = file.filename
-        destination = '/'.join([user_folders, filename])
-        file.save(destination)
-    return render_template('photos/complete.html', user_folders=user_folders, filename=filename)
+def photo_detail(slug):
+    photo = Photo.query.filter(Post.slug==slug).first()
+    tags = post.tags
+    return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)

@@ -183,7 +183,7 @@ class Event(db.Model):
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    photo_tittle = db.Column(db.String(100), unique=True)
+    photo_title = db.Column(db.String(100), unique=True)
     photo_description = db.Column(db.String(255))
     slug = db.Column(db.String(140), unique=True)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)
@@ -192,13 +192,13 @@ class Photo(db.Model):
     tags = db.relationship(
         'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
 
-    def __init__(self, *args, **kwargs):
-        super(Photo, self).__init__(*args, **kwargs)
-        self.generate_slug()
+    # def __init__(self, *args, **kwargs):
+    #     super(Photo, self).__init__(*args, **kwargs)
+    #     self.generate_slug()
 
-    def generate_slug(self):
-        if self.photo_title:
-            self.slug = slugify(self.photo_title + str(int(time())))
+    # def generate_slug(self):
+    #     if self.photo_title:
+    #         self.slug = slugify(self.photo_title + str(int(time())))
 
 
 #### FLASK SECURIT
