@@ -68,15 +68,21 @@ from app.models import *
 from app import view
 from app import errors
 
-try:
-    tag_1 = Tag(name='jogging')
-    tag_2 = Tag(name='workout')
-    tag_3 = Tag(name='box')
-    tag_4 = Tag(name='fitness')
-    db.session.add_all([tag_1, tag_2, tag_3, tag_4])
-    db.session.commit()
-except:
-    pass
+
+for activity in ['jogging', 'workout', 'box', 'fitness']:
+    if not Tag.query.filter(Tag.name==activity):
+        tag = Tag(name=activity)
+        db.session.add(tag)
+        db.session.commit()
+# try:
+#     tag_1 = Tag(name='jogging')
+#     tag_2 = Tag(name='workout')
+#     tag_3 = Tag(name='box')
+#     tag_4 = Tag(name='fitness')
+#     db.session.add_all([tag_1, tag_2, tag_3, tag_4])
+#     db.session.commit()
+# except:
+#     pass
 
 from .blueprints.posts.blueprint import posts
 from .blueprints.users.blueprint import users

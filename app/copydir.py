@@ -17,6 +17,8 @@ def copydir(source, dest):
             shutil.copyfile(os.path.join(root, file), os.path.join(dest_path, file))
 
 if __name__ == '__main__':
-    source = r'C:\Python\web_framework\blog_flask\app\app\data\avatar'
-    dest = r'C:\Python\web_framework\blog_flask\app\app\data\new'
+    source = os.path.join(os.getcwd(), 'app', 'static', 'user_data', 'avatar')
+    #source = r'c:\\Python\\web_framework\\blog_flask\\app\\static\\user_data\\avatar'
+    dest = os.path.join(os.getcwd(), 'app', 'static', 'user_data', 'new')
+    #dest = r'c:\\Python\\web_framework\\blog_flask\\app\\static\\user_data\\new'
     copydir(source, dest)

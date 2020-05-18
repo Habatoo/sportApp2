@@ -71,13 +71,14 @@ def register():
             new_user = User.query.filter(User.username == form.username.data).first()
             #print('dir', app.config['DATA_DIR'])          
             user_dir = new_user.username + new_user.timestamp
-            user_folders = os.path.join(app.config['DATA_DIR'], user_dir)
+            #user_folders = os.path.join(app.config['DATA_DIR'], user_dir)
+            user_folders = os.path.join('app', 'static', 'user_data', user_dir)
             if not os.path.isdir(user_folders):
                 os.mkdir(user_folders)
                 os.mkdir(os.path.join(user_folders, 'photos'))
                 os.mkdir(os.path.join(user_folders, 'tracking_data'))
             #print('user_folders', user_folders)
-            copydir(os.path.join(app.config['DATA_DIR'], 'avatar'), user_folders)
+            copydir(os.path.join('app', 'static', 'user_data', 'avatar'), user_folders)
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('login'))
         except:
