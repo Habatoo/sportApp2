@@ -9,6 +9,7 @@ from flask_login import login_user
 from flask_login import logout_user
 from flask_login import current_user
 from flask_login import login_required
+from werkzeug.utils import secure_filename
 
 from .forms import PhotoForm
 
@@ -20,6 +21,9 @@ import os
 
 photos = Blueprint('photos', __name__, template_folder='templates')
 
+def allowed_file(filename):
+    return '.' in filename and \
+           filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
 @photos.route('/', methods=['GET', 'POST'])
 @login_required
@@ -29,33 +33,36 @@ def index():
 
     user = User.query.filter(User.username == current_user.username).first()     
     user_dir = user.username + user.timestamp
-    user_folders = os.path.join(app.config['DATA_DIR'], user_dir, 'photos')
-    files_path = os.listdir(user_folders)
-    img_url = ['user_data/{}/{}/{}'.format(user_dir, 'photos', files) for files in files_path]
-  
+    user_folders = os.path.join('user_data', user_dir, 'photos')
+    photos = Photo.query.filter(Photo.photo_author==current_user).all()
 
 
-    if request.method == 'POST':
+    if request.method == 'POST':       
         for file in request.files.getlist('file'):
-            filename = file.filename
+            filename =  secure_filename(file.filename)
             # if bool(file.filename):
             #     file_bytes = file.read(MAX_FILE_SIZE)
             #     args['file_size_error'] = len(file_bytes) == MAX_FILE_SIZE
             # args['method'] = 'POST'
-            destination = '/'.join([user_folders, filename])
-            file.save(destination)
+            #destination = '/'.join([user_folders, filename])
+            destination = os.path.join('app', 'static', user_folders, filename)
+            if allowed_file(filename):
+                file.save(destination)
 
-            photo = Photo(
-            photo_title='', 
-            photo_description='', 
-            slug='user_data/{}/{}/{}'.format(user_dir, 'photos', filename),
-            photo_author=current_user, 
-            )
-            db.session.add(photo)
-            db.session.commit()
-
+                photo = Photo(
+                photo_title='', 
+                photo_description='', 
+                slug='user_data/{}/{}/{}'.format(user_dir, 'photos', filename),
+                # slug=os.path.join(user_folders, filename),
+                photo_author=current_user, 
+                )
+                db.session.add(photo)
+                db.session.commit()
+            else:
+                flash('Not allowed file extensions')
+            return redirect(url_for('photos.index'))
         return redirect(url_for('photos.index'))
-    return render_template('photos/index.html', args=args, files_path=files_path, img_url=img_url)
+    return render_template('photos/index.html', args=args, photos=photos)
     
 
 @photos.route('/<slug>')

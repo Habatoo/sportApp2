@@ -18,7 +18,5 @@ def copydir(source, dest):
 
 if __name__ == '__main__':
     source = os.path.join(os.getcwd(), 'app', 'static', 'user_data', 'avatar')
-    #source = r'c:\\Python\\web_framework\\blog_flask\\app\\static\\user_data\\avatar'
     dest = os.path.join(os.getcwd(), 'app', 'static', 'user_data', 'new')
-    #dest = r'c:\\Python\\web_framework\\blog_flask\\app\\static\\user_data\\new'
     copydir(source, dest)

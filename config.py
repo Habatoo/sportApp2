@@ -17,7 +17,9 @@ class Configuration(object):
     #         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
+    ########## File upload config #############################
     # MAX_CONTENT_LENGTH = 16 * 1024 * 1024
+    ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 
 
@@ -35,7 +37,9 @@ class DevConfig(Configuration):
     # SQLALCHEMY_DATABASE_URI = r'postgres://qkwtzbjxghqiyw:4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1@ec2-54-88-130-244.compute-1.amazonaws.com:5432/d2pcjnksf487v1'
     SECRET_KEY = 'something very secret'
 
-    DATA_DIR = os.environ.get('DATA_DIR') or os.path.join(os.path.dirname(os.path.abspath(__file__)), 'app\\static\\user_data\\') # 
+    DATA_DIR = os.environ.get('DATA_DIR') or \
+         os.path.join(
+             os.path.dirname(os.path.abspath(__file__)), 'app', 'static', 'user_data') # 
 
     LOG_TO_STDOUT = os.environ.get('LOG_TO_STDOUT')
     

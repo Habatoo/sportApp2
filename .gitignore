@@ -17,6 +17,9 @@ migrations/~*
 migrations/versions/__pycache__
 migrations/versions/~*
 
+app/static/user_data/
+!app/static/user_data/avatar/
+
 blueprints/events/__pycache__
 blueprints/events/~*
 blueprints/events/templates/events/~*

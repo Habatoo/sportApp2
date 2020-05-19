@@ -2,8 +2,8 @@
 <h3>Photos</h3>
 {% endblock %} {% block content %}
 <div class="main-content">
-    {{ current_user.username }} photos:<br> {% for img in img_url %}
-    <img src="{{ url_for('static', filename=img) }}" width="240" height="240" alt="photo" /><br>
+    {{ current_user.username }} photos:<br> {% for photo in photos %}
+    <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" /><br>
     <hr> {% endfor %}
     <br> Photo uploader
     <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">
