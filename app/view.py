@@ -16,6 +16,15 @@ def before_request():
         current_user.last_seen = datetime.utcnow()
         db.session.commit()
 
+
+@app.route('/admin/')
+@login_required
+def admin():
+    user = User.query.filter_by(username=current_user.username).first_or_404()
+    if user.username != 'admin':
+        return redirect(url_for('index'))
+    return redirect(url_for('index'))
+
 @app.route('/')
 @app.route('/index')
 @login_required
