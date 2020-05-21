@@ -10,12 +10,8 @@ class Configuration(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'you-will-never-guess'
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
        'sqlite:///' + os.path.join(basedir, 'app.db')
-    # try:
-    #     SQLALCHEMY_DATABASE_URI = r'postgres://qkwtzbjxghqiyw:4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1@ec2-54-88-130-244.compute-1.amazonaws.com:5432/d2pcjnksf487v1'
-    # except:
-    #     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
-    #         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    POSTS_PER_PAGE = 3
 
     ########## File upload config #############################
     # MAX_CONTENT_LENGTH = 16 * 1024 * 1024
@@ -32,9 +28,6 @@ class DevConfig(Configuration):
 
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    # params = urllib.parse.quote_plus(
-    #     r'DRIVER={SQL Server};SERVER=ec2-54-88-130-244.compute-1.amazonaws.com;DATABASE=d2pcjnksf487v1;UID=qkwtzbjxghqiyw;PWD=4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1;')
-    # SQLALCHEMY_DATABASE_URI = r'postgres://qkwtzbjxghqiyw:4ec57309b031383d02a5563c0e08bc86f17ee49af4dcac632ad53b02d4eac0d1@ec2-54-88-130-244.compute-1.amazonaws.com:5432/d2pcjnksf487v1'
     SECRET_KEY = 'something very secret'
 
     DATA_DIR = os.environ.get('DATA_DIR') or \
@@ -49,8 +42,6 @@ class DevConfig(Configuration):
     MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
     MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
     ADMINS = ['your-email@example.com']
-
-    POSTS_PER_PAGE = 3
 
     CITIES = [
         {'label': 'Novosibirsk', 'value': 'Novosibirsk'},

@@ -2,10 +2,11 @@ from datetime import datetime
 from time import time
 import re
 import os
-
+import jwt
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
 from flask_security import RoleMixin
+import jwt
 
 from app import app, login, db
 
@@ -112,6 +113,20 @@ class User(UserMixin, db.Model):
         own = Post.query.filter_by(user_id=self.id)
         return followed.union(own).order_by(Post.created.desc())
 
+    def get_reset_password_token(self, expires_in=600):
+        return jwt.encode(
+            {'reset_password': self.id, 'exp': time() + expires_in},
+            app.config['SECRET_KEY'], algorithm='HS256').decode('utf-8')
+
+    @staticmethod
+    def verify_reset_password_token(token):
+        try:
+            id = jwt.decode(token, app.config['SECRET_KEY'],
+                            algorithms=['HS256'])['reset_password']
+        except:
+            return
+        return User.query.get(id)
+
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
@@ -192,13 +207,6 @@ class Photo(db.Model):
     tags = db.relationship(
         'Tag', secondary=photo_tags, backref=db.backref('photos_tags', lazy='dynamic'))
 
-    # def __init__(self, *args, **kwargs):
-    #     super(Photo, self).__init__(*args, **kwargs)
-    #     self.generate_slug()
-
-    # def generate_slug(self):
-    #     if self.photo_title:
-    #         self.slug = slugify(self.photo_title + str(int(time())))
 
 
 #### FLASK SECURIT
