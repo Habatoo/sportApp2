@@ -25,6 +25,24 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in app.config['ALLOWED_EXTENSIONS']
 
+@photos.route('/<slug>/edit', methods=['GET', 'POST'])
+@login_required
+def edit_info(slug):
+    photo = Photo.query.filter(Photo.id==slug).first()
+#     form = PhotoForm(formdata=request.form, obj=photo)
+
+#     if form.validate_on_submit():
+#         photo.title = form.title.data
+#         try:
+#             photo.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+#             db.session.commit()
+#             flash('Your photo edited')
+#             return redirect(url_for('photos.photo_info', slug=photo.slug))
+#         except:
+#            redirect('photos.index') 
+#     form = PhotoForm(obj=photo)
+    return render_template('photos/edit_info.html')#, form=form)           
+
 @photos.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -68,6 +86,12 @@ def index():
 @photos.route('/<slug>')
 @login_required
 def photo_detail(slug):
-    photo = Photo.query.filter(Post.slug==slug).first()
-    tags = post.tags
-    return render_template('posts/post_detail.html', post=post, tags=tags, user=current_user)
+    photo = Photo.query.filter(Photo.id==slug).first()
+    return render_template('photos/photo_info.html', photo=photo, user=current_user)
+
+@photos.route('/tag/<slug>')
+@login_required
+def tag_detail(slug):
+    tag = Tag.query.filter(Tag.slug==slug).first()
+    photos = tag.photos_tags.all()
+    return render_template('photos/tag_detail.html', tag=tag, photos=photos)
