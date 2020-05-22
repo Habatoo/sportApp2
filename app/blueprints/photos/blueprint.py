@@ -29,7 +29,7 @@ def allowed_file(filename):
 @login_required
 def edit_info(slug):
     photo = Photo.query.filter(Photo.id==slug).first()
-#     form = PhotoForm(formdata=request.form, obj=photo)
+    form = PhotoForm(formdata=request.form, obj=photo)
 
 #     if form.validate_on_submit():
 #         photo.title = form.title.data
@@ -41,7 +41,7 @@ def edit_info(slug):
 #         except:
 #            redirect('photos.index') 
 #     form = PhotoForm(obj=photo)
-    return render_template('photos/edit_info.html')#, form=form)           
+    return render_template('photos/edit_info.html', form=form)           
 
 @photos.route('/', methods=['GET', 'POST'])
 @login_required
@@ -68,7 +68,7 @@ def index():
                 file.save(destination)
 
                 photo = Photo(
-                photo_title='', 
+                photo_title=filename, 
                 photo_description='', 
                 slug='user_data/{}/{}/{}'.format(user_dir, 'photos', filename),
                 # slug=os.path.join(user_folders, filename),

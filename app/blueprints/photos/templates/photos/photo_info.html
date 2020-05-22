@@ -3,6 +3,9 @@
 {% endblock %} {% block content %}
 <div class="main-content">
     <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
+</div>
+<div class="main-content">
+    {{photo.photo_title}}
     <hr>
 </div>
 
