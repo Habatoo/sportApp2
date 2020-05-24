@@ -31,16 +31,17 @@ def edit_info(slug):
     photo = Photo.query.filter(Photo.id==slug).first()
     form = PhotoForm(formdata=request.form, obj=photo)
 
-#     if form.validate_on_submit():
-#         photo.title = form.title.data
-#         try:
-#             photo.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-#             db.session.commit()
-#             flash('Your photo edited')
-#             return redirect(url_for('photos.photo_info', slug=photo.slug))
-#         except:
-#            redirect('photos.index') 
-#     form = PhotoForm(obj=photo)
+    if form.validate_on_submit():
+        photo.photo_title = form.photo_title.data
+        photo.photo_description = form.photo_description.data
+        try:
+            photo.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+            db.session.commit()
+            flash('Your photo edited')
+            return redirect(url_for('photos.photo_info', slug=photo.slug))
+        except:
+           redirect('photos.index') 
+    form = PhotoForm(obj=photo)
     return render_template('photos/edit_info.html', form=form)           
 
 @photos.route('/', methods=['GET', 'POST'])

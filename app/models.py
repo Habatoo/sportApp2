@@ -52,6 +52,9 @@ roles_users = db.Table(
     db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
     db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
+# class Levels(db.Model):
+#     pass
+
 class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), index=True, unique=True)
@@ -65,6 +68,9 @@ class User(UserMixin, db.Model):
     about_me = db.Column(db.String(140))
     last_seen = db.Column(db.DateTime, default=datetime.utcnow)
     active = db.Column(db.Boolean)
+
+    mentor = db.Column(db.Boolean, default=False)
+    level = db.Column(db.Integer, default=0)
     
     tags = db.relationship(
         'Tag', secondary=user_tags, backref=db.backref('users_tags', lazy='dynamic'))
@@ -177,6 +183,7 @@ class Event(db.Model):
 
     event_starter = db.Column(db.Integer, db.ForeignKey('user.id'))
     event_crew = db.Column(db.Text)
+    event_level = db.Column(db.Integer)
 
     tags = db.relationship(
         'Tag', secondary=event_tags, backref=db.backref('events_tags', lazy='dynamic'))
@@ -198,7 +205,7 @@ class Event(db.Model):
 
 class Photo(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    photo_title = db.Column(db.String(100), unique=True)
+    photo_title = db.Column(db.String(100))
     photo_description = db.Column(db.String(255))
     slug = db.Column(db.String(140), unique=True)
     created = db.Column(db.DateTime, index=True, default=datetime.utcnow)

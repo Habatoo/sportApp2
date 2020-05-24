@@ -5,7 +5,7 @@
     {{ current_user.username }} photos:<br> {% for photo in photos %}
     <a href="{{ url_for('photos.photo_detail', slug=photo.id) }}">
         <img src="{{ url_for('static', filename=photo.slug) }}" width="240" height="240" alt="photo" />
-    </a><br>
+    </a><br> {{photo.photo_title}}
     <hr> {% endfor %}
     <br> Photo uploader
     <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">

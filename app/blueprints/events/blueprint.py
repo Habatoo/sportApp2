@@ -30,13 +30,14 @@ def edit_event(slug):
         event_time= form.event_time.data,
         event_place = form.event_place.data,
         event_geo = form.event_geo.data,
-        try:
-            event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-            db.session.commit()
-            flash('Your event edited')
-            return redirect(url_for('events.event_detail', slug=event.slug))
-        except:
-           redirect('events.index') 
+        event_level = form.event_level.data,
+        # try:
+        event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+        db.session.commit()
+        flash('Your event edited')
+        return redirect(url_for('events.event_detail', slug=event.slug))
+        # except:
+        #    redirect('events.index') 
     form = EventForm(obj=event)
     return render_template('events/edit_event.html', form=form)
 
@@ -51,6 +52,7 @@ def index():
             event_time= form.event_time.data,
             event_place = form.event_place.data,
             event_geo = form.event_geo.data,
+            event_level = form.event_level.data,
             event_author=current_user)
         #try:
         event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
@@ -63,10 +65,6 @@ def index():
     q = request.args.get('q')
     page = request.args.get('page')
     page = request.args.get('page', 1, type=int)
-    # if page and page.isdigit():
-    #     page = int(page) 
-    # else:
-    #     page = 1 
     if q:
         events = Event.query.filter(Event.event_title.contains(q) | Event.event_body.contains(q).all())
     else:

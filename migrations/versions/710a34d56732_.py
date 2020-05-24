@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: a681164f0467
+Revision ID: 710a34d56732
 Revises: 
-Create Date: 2020-05-17 23:14:40.325105
+Create Date: 2020-05-24 11:17:32.715772
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'a681164f0467'
+revision = '710a34d56732'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -43,6 +43,8 @@ def upgrade():
     sa.Column('about_me', sa.String(length=140), nullable=True),
     sa.Column('last_seen', sa.DateTime(), nullable=True),
     sa.Column('active', sa.Boolean(), nullable=True),
+    sa.Column('mentor', sa.Boolean(), nullable=True),
+    sa.Column('level', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_index(op.f('ix_user_date'), 'user', ['date'], unique=False)
@@ -59,6 +61,7 @@ def upgrade():
     sa.Column('event_geo', sa.Text(), nullable=True),
     sa.Column('event_starter', sa.Integer(), nullable=True),
     sa.Column('event_crew', sa.Text(), nullable=True),
+    sa.Column('event_level', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['event_starter'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('slug')
@@ -79,7 +82,6 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['user_id'], ['user.id'], ),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('photo_title'),
     sa.UniqueConstraint('slug')
     )
     op.create_index(op.f('ix_photo_created'), 'photo', ['created'], unique=False)

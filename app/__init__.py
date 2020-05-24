@@ -70,7 +70,7 @@ from app import errors
 
 
 for activity in ['jogging', 'workout', 'box', 'fitness']:
-    if not Tag.query.filter(Tag.name==activity):
+    if not Tag.query.filter(Tag.name==activity).first():
         tag = Tag(name=activity)
         db.session.add(tag)
         db.session.commit()

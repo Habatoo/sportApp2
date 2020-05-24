@@ -8,6 +8,8 @@
                 <br>
                 <a href="{{ url_for('events.event_detail', slug=event.slug) }}">{{ event.event_title }}</a>
                 <br> {{ event.event_body }}
+                <br> {{ event.event_level }}
+
                 <div class="tags">
                     tags: {% for tag in event.tags %}
                     <a href="{{ url_for('events.tag_detail', slug=tag.slug) }}">
@@ -50,6 +52,8 @@
             <br> {{ form.event_place.label(class='control-label') }} {{ form.event_place(class='form-control') }}<br> {% for error in form.event_place.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
             <br> {{ form.event_geo.label(class='control-label') }}<br> {{ form.event_geo(class='form-control') }}<br> {% for error in form.event_geo.errors %}
+            <span style="color: red;">[{{ error }}]</span> {% endfor %}
+            <br> {{ form.event_level.label(class='control-label') }}<br> {{ form.event_level(class='form-control') }}<br> {% for error in form.event_level.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
             <br> {{ form.tags.label(class='control-label') }}<br> {{ form.tags() }}<br> {% for error in form.tags.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}

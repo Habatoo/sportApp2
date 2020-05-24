@@ -18,8 +18,9 @@ class EventForm(FlaskForm):
     event_body = TextAreaField('Event', validators=[DataRequired()])
     event_time = DateTimeField(
         'Select date of event', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
-    event_place = TextAreaField('Place, adress', validators=[DataRequired()])
+    event_place = TextAreaField('Place, address', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
+    event_level = StringField('Event level', validators=[DataRequired()])
     tags = RadioField(
         'Select tags', choices=tag_choices)
     # event_crew = db.Column(db.Integer, db.ForeignKey('user.id'))

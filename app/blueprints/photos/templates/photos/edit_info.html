@@ -2,12 +2,6 @@
 <h3>Edit photo info:</h3>
 {% endblock %} {% block content %} {% if form %}
 <div>
-    edit<br>
-    <br> Photo uploader
-    <form id="uload-form" action="{{ url_for('photos.index') }}" method="POST" enctype="multipart/form-data">
-        <input type="file" name="file" accept="image/*" multiple>
-        <input type="submit" value="Send">
-    </form>
     <form action="" method="POST">
         {{ form.hidden_tag() }}
         <div class="form-group">
