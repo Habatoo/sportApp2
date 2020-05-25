@@ -1,8 +1,10 @@
 import os
 import urllib
 import psycopg2
+import logging
 
 basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 class Configuration(object):
     DEBUG = False
@@ -12,6 +14,11 @@ class Configuration(object):
        'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     POSTS_PER_PAGE = 3
+
+    LOGGER_CONFIG = dict(level=logging.DEBUG,
+                     file="app.log",
+                     formatter=logging.Formatter("%(asctime)s [%(levelname)s] - %(name)s:%(message)s")
+                     )
 
     ########## File upload config #############################
     # MAX_CONTENT_LENGTH = 16 * 1024 * 1024

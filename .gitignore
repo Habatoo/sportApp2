@@ -5,7 +5,7 @@
 *.bat
 *.ipynb
 
-tests.py
+test.py
 
 venv/
 

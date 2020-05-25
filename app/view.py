@@ -1,15 +1,23 @@
 from datetime import datetime
 from werkzeug.urls import url_parse
 import os
+import logging
 
 from flask import render_template, flash, redirect, url_for, request
 from app.forms import LoginForm, RegistrationForm, ResetPasswordRequestForm, ResetPasswordForm
 from flask_login import login_user, logout_user, current_user, login_required
 
-from app import app, db
+from app import app, db, log
 from app.models import *
 from app.copydir import copydir
 from app.email import send_password_reset_email
+
+# log = logging.getLogger('btb_Api')
+# fh = logging.FileHandler(app.config['LOGGER_CONFIG']['file'])
+# fh.setLevel(app.config['LOGGER_CONFIG']['level'])
+# fh.setFormatter(app.config['LOGGER_CONFIG']['formatter'])
+# log.addHandler(fh)
+# log.setLevel(app.config['LOGGER_CONFIG']['level'])
 
 @app.before_request
 def before_request():
@@ -55,12 +63,15 @@ def login():
         next_page = request.args.get('next')
         if not next_page or url_parse(next_page).netloc != '':
             next_page = url_for('index')
+        log.info("User '%s' login." % (user.username))
         return redirect(next_page)
     return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/logout')
 def logout():
+    user = current_user.username
     logout_user()
+    log.info("User '%s' logout." % (user))
     return redirect(url_for('index'))
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -75,24 +86,26 @@ def register():
             city=form.city.data
             )
         user.set_password(form.password.data)
+        log.debug("user before: %s", user)
         try:
             db.session.add(user)
             db.session.commit()
-            new_user = User.query.filter(User.username == form.username.data).first()
-            #print('dir', app.config['DATA_DIR'])          
+            log.debug("user after: %s", user)
+            new_user = User.query.filter(User.username == form.username.data).first()         
             user_dir = new_user.username + new_user.timestamp
-            #user_folders = os.path.join(app.config['DATA_DIR'], user_dir)
             user_folders = os.path.join('app', 'static', 'user_data', user_dir)
             if not os.path.isdir(user_folders):
                 os.mkdir(user_folders)
                 os.mkdir(os.path.join(user_folders, 'photos'))
                 os.mkdir(os.path.join(user_folders, 'tracking_data'))
-            #print('user_folders', user_folders)
             copydir(os.path.join('app', 'static', 'user_data', 'avatar'), user_folders)
             flash('Congratulations, you are now a registered user!')
+            log.debug("user after make folder: %s", user)
+            log.info("User '%s' register." % (user.username))
             return redirect(url_for('login'))
         except:
             flash('Something wrong')
+            log.info("User '%s' can not register." % (user.username))
             return redirect(url_for('register'))
     return render_template('register.html', title='Register', form=form)
 
@@ -106,6 +119,7 @@ def reset_password_request():
         if user:
             send_password_reset_email(user)
         flash('Check your email for the instructions to reset your password')
+        log.info("User with  email '%s' reset password." % (form.email.data))
         return redirect(url_for('login'))
     return render_template('reset_password_request.html',
                            title='Reset Password', form=form)

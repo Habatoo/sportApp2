@@ -5,13 +5,13 @@ from wtforms.fields.html5 import DateTimeField
 
 from flask_wtf import FlaskForm
 
-from app import app
+from app import app, tag_choices
 from app.models import *
 
-try:
-    tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-except:
-    tag_choices = []
+# try:
+#     tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
+# except:
+#     tag_choices = []
 
 class EventForm(FlaskForm):
     event_title = StringField('Title', validators=[DataRequired()])

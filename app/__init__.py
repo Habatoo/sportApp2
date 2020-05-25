@@ -50,18 +50,25 @@ if not app.debug:
         mail_handler.setLevel(logging.ERROR)
         app.logger.addHandler(mail_handler)
 
-    if not os.path.exists('logs'): 
-        os.mkdir('logs')
-    file_handler = RotatingFileHandler(
-        'logs/sportapp_{}.log'.format(str(int(time()))),
-        maxBytes=10240, backupCount=10)
-    file_handler.setFormatter(logging.Formatter(
-        '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
-    file_handler.setLevel(logging.INFO)
-    app.logger.addHandler(file_handler)
+    # if not os.path.exists('logs'): 
+    #     os.mkdir('logs')
+    # file_handler = RotatingFileHandler(
+    #     'logs/sportapp_{}.log'.format(str(int(time()))),
+    #     maxBytes=10240, backupCount=10)
+    # file_handler.setFormatter(logging.Formatter(
+    #     '%(asctime)s %(levelname)s: %(message)s [in %(pathname)s:%(lineno)d]'))
+    # file_handler.setLevel(logging.INFO)
+    # app.logger.addHandler(file_handler)
 
-    app.logger.setLevel(logging.INFO)
-    app.logger.info('sportApp')
+    # app.logger.setLevel(logging.INFO)
+    # app.logger.info('sportApp')
+
+log = logging.getLogger('btb_Api')
+fh = logging.FileHandler(app.config['LOGGER_CONFIG']['file'])
+fh.setLevel(app.config['LOGGER_CONFIG']['level'])
+fh.setFormatter(app.config['LOGGER_CONFIG']['formatter'])
+log.addHandler(fh)
+log.setLevel(app.config['LOGGER_CONFIG']['level'])
 
 
 from app.models import *
@@ -74,6 +81,7 @@ for activity in ['jogging', 'workout', 'box', 'fitness']:
         tag = Tag(name=activity)
         db.session.add(tag)
         db.session.commit()
+tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
 
 from .blueprints.posts.blueprint import posts
 from .blueprints.users.blueprint import users

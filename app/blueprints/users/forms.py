@@ -5,14 +5,11 @@ from wtforms import TextAreaField
 from flask_wtf import FlaskForm
 
 
-from app import app
+from app import app, tag_choices
 from app.models import *
 
 cities = app.config['CITIES']
-try:
-    tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-except:
-    tag_choices = []
+
 
 class EditProfileForm(FlaskForm):
     username = StringField('Username', validators=[DataRequired()])  

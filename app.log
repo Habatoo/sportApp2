@@ -1,0 +1,13 @@
+2020-05-25 19:32:58,342 [INFO] - btb_Api:User 'dog' register.
+2020-05-25 19:33:15,290 [INFO] - btb_Api:User 'dog' login.
+2020-05-25 19:33:17,881 [INFO] - btb_Api:User 'dog' logout.
+2020-05-25 20:31:54,848 [INFO] - btb_Api:User 'dog' login.
+2020-05-25 20:34:25,147 [INFO] - btb_Api:User 'dog' edit profile.
+2020-05-25 20:38:19,139 [INFO] - btb_Api:User 'dog' following user 'cat'.
+2020-05-25 20:38:40,221 [INFO] - btb_Api:User 'dog' unfollowing user 'cat'.
+2020-05-25 20:43:46,747 [INFO] - btb_Api:User 'dog' logout.
+2020-05-25 20:44:20,120 [DEBUG] - btb_Api:user before: <User (transient 896350398728)>
+2020-05-25 20:44:20,165 [DEBUG] - btb_Api:user after: <User 6>
+2020-05-25 20:44:20,195 [DEBUG] - btb_Api:user after make folder: <User 6>
+2020-05-25 20:44:20,196 [INFO] - btb_Api:User 'man' register.
+2020-05-25 20:44:40,345 [INFO] - btb_Api:User 'man' login.
