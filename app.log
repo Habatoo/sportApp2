@@ -11,3 +11,10 @@
 2020-05-25 20:44:20,195 [DEBUG] - btb_Api:user after make folder: <User 6>
 2020-05-25 20:44:20,196 [INFO] - btb_Api:User 'man' register.
 2020-05-25 20:44:40,345 [INFO] - btb_Api:User 'man' login.
+2020-05-27 23:28:47,251 [INFO] - btb_Api:User 'dog' login.
+2020-05-27 23:28:47,251 [INFO] - btb_Api:User 'dog' login.
+2020-05-27 23:29:03,079 [INFO] - btb_Api:User 'dog+' edit profile.
+2020-05-27 23:29:03,079 [INFO] - btb_Api:User 'dog+' edit profile.
+2020-05-27 23:29:38,021 [INFO] - btb_Api:User 'dog+' following user 'cat'.
+2020-05-27 23:29:38,021 [INFO] - btb_Api:User 'dog+' following user 'cat'.
+2020-05-27 23:41:24,822 [INFO] - btb_Api:User 'dog' edit profile.

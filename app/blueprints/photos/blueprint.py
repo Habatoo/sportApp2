@@ -38,6 +38,7 @@ def edit_info(slug):
             photo.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()
             flash('Your photo edited')
+            log.info("User '%s' edit photo '%s' info." % (current_user.username, photo.photo_title))
             return redirect(url_for('photos.photo_info', slug=photo.slug))
         except:
            redirect('photos.index') 
@@ -52,6 +53,7 @@ def index():
 
     user = User.query.filter(User.username == current_user.username).first()     
     user_dir = user.username + user.timestamp
+    print(user_dir)
     user_folders = os.path.join('user_data', user_dir, 'photos')
     photos = Photo.query.filter(Photo.photo_author==current_user).all()
 
@@ -72,7 +74,6 @@ def index():
                 photo_title=filename, 
                 photo_description='', 
                 slug='user_data/{}/{}/{}'.format(user_dir, 'photos', filename),
-                # slug=os.path.join(user_folders, filename),
                 photo_author=current_user, 
                 )
                 db.session.add(photo)

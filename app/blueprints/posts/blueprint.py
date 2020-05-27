@@ -14,6 +14,7 @@ from .forms import PostForm
 
 from app import app
 from app import db
+from app import log
 from app.models import *
 
 posts = Blueprint('posts', __name__, template_folder='templates')
@@ -32,6 +33,7 @@ def edit_post(slug):
             post.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()
             flash('Your post edited')
+            log.info("User '%s' edit post '%s'." % (current_user.username, post.title))
             return redirect(url_for('posts.post_detail', slug=post.slug))
         except:
            redirect('posts.index') 
@@ -60,10 +62,6 @@ def index():
     q = request.args.get('q')
     page = request.args.get('page')
     page = request.args.get('page', 1, type=int)
-    # if page and page.isdigit():
-    #     page = int(page) 
-    # else:
-    #     page = 1 
     if q:
         posts = Post.query.filter(Post.title.contains(q) | Post.body.contains(q).all())
     else:

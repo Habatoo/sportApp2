@@ -12,12 +12,6 @@ from app.models import *
 from app.copydir import copydir
 from app.email import send_password_reset_email
 
-# log = logging.getLogger('btb_Api')
-# fh = logging.FileHandler(app.config['LOGGER_CONFIG']['file'])
-# fh.setLevel(app.config['LOGGER_CONFIG']['level'])
-# fh.setFormatter(app.config['LOGGER_CONFIG']['formatter'])
-# log.addHandler(fh)
-# log.setLevel(app.config['LOGGER_CONFIG']['level'])
 
 @app.before_request
 def before_request():
