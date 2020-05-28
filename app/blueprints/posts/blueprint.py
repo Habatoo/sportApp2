@@ -24,7 +24,7 @@ posts = Blueprint('posts', __name__, template_folder='templates')
 def edit_post(slug):
     post = Post.query.filter(Post.slug==slug).first()
     form = PostForm(formdata=request.form, obj=post)
-
+    print('edited', form.validate_on_submit())
     if form.validate_on_submit():
         # form.populate_obj(post)
         post.title = form.title.data

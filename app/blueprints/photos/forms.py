@@ -7,10 +7,6 @@ from flask_wtf import FlaskForm
 from app import app, tag_choices
 from app.models import *
 
-# try:
-#     tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-# except:
-#     tag_choices = []
     
 class PhotoForm(FlaskForm):
     photo_title = StringField('Photo title', validators=[DataRequired()])

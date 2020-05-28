@@ -26,20 +26,20 @@ def edit_event(slug):
     form = EventForm(formdata=request.form, obj=event)
 
     if form.validate_on_submit():
-        event.event_title = form.event_title.data, 
-        event.event_body = form.event_body.data, 
-        event.event_time = form.event_time.data,
-        event.event_place = form.event_place.data,
-        event.event_geo = form.event_geo.data,
-        event.event_level = form.event_level.data,
+        event.event_title=form.event_title.data
+        event.event_body=form.event_body.data 
+        event.event_time= form.event_time.data
+        event.event_place = form.event_place.data
+        event.event_geo = form.event_geo.data
+        event.event_level = form.event_level.data
         try:
             event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
             db.session.commit()
             flash('Your event edited')
-            log.info("User '%s' edit event '%s' info." % (current_user.username, event.event_title))
+            log.info("User '%s' edit event '%s'." % (current_user.username, event.event_title))
             return redirect(url_for('events.event_detail', slug=event.slug))
         except:
-            redirect('events.index') 
+           redirect('events.index') 
     form = EventForm(obj=event)
     return render_template('events/edit_event.html', form=form)
 

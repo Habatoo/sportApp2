@@ -8,16 +8,12 @@ from flask_wtf import FlaskForm
 from app import app, tag_choices
 from app.models import *
 
-# try:
-#     tag_choices = [(tag.name, tag.slug)  for tag in Tag.query.all()]
-# except:
-#     tag_choices = []
 
 class EventForm(FlaskForm):
     event_title = StringField('Title', validators=[DataRequired()])
     event_body = TextAreaField('Event', validators=[DataRequired()])
     event_time = DateTimeField(
-        'Select date of event', format='%Y-%m-%d %H:%M:%S', validators=[DataRequired()])
+        'Select date of event', format='%Y-%m-%d %H:%M:%S')#, validators=[DataRequired()])
     event_place = TextAreaField('Place, address', validators=[DataRequired()])
     event_geo = TextAreaField('GEO, long, lat', validators=[DataRequired()])
     event_level = StringField('Event level', validators=[DataRequired()])

@@ -18,3 +18,13 @@
 2020-05-27 23:29:38,021 [INFO] - btb_Api:User 'dog+' following user 'cat'.
 2020-05-27 23:29:38,021 [INFO] - btb_Api:User 'dog+' following user 'cat'.
 2020-05-27 23:41:24,822 [INFO] - btb_Api:User 'dog' edit profile.
+2020-05-28 20:41:16,894 [DEBUG] - btb_Api:user before: <User (transient 16851004232)>
+2020-05-28 20:41:16,923 [DEBUG] - btb_Api:user after: <User 7>
+2020-05-28 20:41:16,952 [DEBUG] - btb_Api:user after make folder: <User 7>
+2020-05-28 20:41:16,953 [INFO] - btb_Api:User 'new' register.
+2020-05-28 20:41:29,007 [INFO] - btb_Api:User 'new' login.
+2020-05-28 20:41:49,979 [INFO] - btb_Api:User 'new' edit profile.
+2020-05-28 20:42:01,592 [INFO] - btb_Api:User 'new' following user 'cat'.
+2020-05-28 22:25:53,279 [INFO] - btb_Api:User 'new' edit post 'new 2'.
+2020-05-28 23:26:47,130 [INFO] - btb_Api:User 'new' edit event 'new event'.
+2020-05-28 23:48:26,644 [INFO] - btb_Api:User 'new' logout.
