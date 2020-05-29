@@ -90,7 +90,7 @@ def index():
 def photo_detail(slug):
     photo = Photo.query.filter(Photo.id==slug).first()
     tags = photo.tags
-    return render_template('photos/photo_info.html', photo=photo, tags=tags, user=current_user)
+    return render_template('photos/photo_detail.html', photo=photo, tags=tags, user=current_user)
 
 @photos.route('/tag/<slug>')
 @login_required
