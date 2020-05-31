@@ -53,7 +53,6 @@ def index():
 
     user = User.query.filter(User.username == current_user.username).first()     
     user_dir = user.username + user.timestamp
-    print(user_dir)
     user_folders = os.path.join('user_data', user_dir, 'photos')
     photos = Photo.query.filter(Photo.photo_author==current_user).all()
 

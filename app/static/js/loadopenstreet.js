@@ -1,10 +1,12 @@
-﻿function GetMap() {
+﻿function GetMap(lon, lat) {
+    lon = lon || 82.87524; // Москва 	37.62, 55.75
+    lat = lat || 55.05954;
     map = new OpenLayers.Map("OSMap"); //инициализация карты
     var mapnik = new OpenLayers.Layer.OSM(); //создание слоя карты
     map.addLayer(mapnik); //добавление слоя
     map.zoomToMaxExtent();
     //долгота - Широта
-    var lonlat = new OpenLayers.LonLat(82.87524, 55.05954); // Москва 	37.62, 55.75
+    var lonlat = new OpenLayers.LonLat(lon, lat);
     map.setCenter(lonlat.transform(
             new OpenLayers.Projection("EPSG:4326"), // переобразование в WGS 1984
             new OpenLayers.Projection("EPSG:900913") // переобразование проекции

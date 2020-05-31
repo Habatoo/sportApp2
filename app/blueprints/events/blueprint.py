@@ -17,7 +17,54 @@ from app import db
 from app import log
 from app.models import *
 
+from geopy.geocoders import Nominatim
+
 events = Blueprint('events', __name__, template_folder='templates')
+
+@events.route('/event_search', methods=['GET', 'POST'])
+@login_required
+def event_search():
+    #form = EventForm()
+    form = EventForm(formdata=request.form)
+    if request.method == 'GET':
+        try:
+            place = request.args
+            #print('place', place['search'])
+            geolocator = Nominatim(user_agent='habatoo@yandex.ru') 
+            location = geolocator.geocode(place.get('search', default = None))
+            if location:
+                newLocation = str(location.latitude) + str(", ") + str(location.longitude)
+                print(newLocation)
+                
+                location_geo = geolocator.reverse([location.latitude, location.longitude]) # 37.62, 55.75
+                address = location_geo.address
+                print(address)
+                #return redirect('events.index')
+
+            else:
+                print('no search')
+                #return redirect('events.index')
+        except:
+            pass
+
+    if form.validate_on_submit():
+        event = Event(
+            event_title=form.event_title.data, 
+            event_body=form.event_body.data, 
+            event_time= form.event_time.data,
+            event_place = form.event_place.data,
+            event_geo = form.event_geo.data,
+            event_level = form.event_level.data,
+            event_author=current_user)
+        event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+        #try:
+        db.session.commit()
+        flash('Your cane make event!')
+        return redirect(url_for('events.index'))
+        #except:
+        #    redirect('index') # create!!!
+    #form = EventForm(formdata=request.form, obj=eve)
+    return render_template('events/new_event.html', form=form)
 
 @events.route('/<slug>/edit', methods=['GET', 'POST'])
 @login_required
@@ -46,23 +93,23 @@ def edit_event(slug):
 @events.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    form = EventForm()
-    if form.validate_on_submit():
-        event = Event(
-            event_title=form.event_title.data, 
-            event_body=form.event_body.data, 
-            event_time= form.event_time.data,
-            event_place = form.event_place.data,
-            event_geo = form.event_geo.data,
-            event_level = form.event_level.data,
-            event_author=current_user)
-        #try:
-        event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-        db.session.commit()
-        flash('Your cane make event!')
-        return redirect(url_for('events.index'))
-        #except:
-        #    redirect('index') # create!!!
+    # form = EventForm()
+    # if form.validate_on_submit():
+    #     event = Event(
+    #         event_title=form.event_title.data, 
+    #         event_body=form.event_body.data, 
+    #         event_time= form.event_time.data,
+    #         event_place = form.event_place.data,
+    #         event_geo = form.event_geo.data,
+    #         event_level = form.event_level.data,
+    #         event_author=current_user)
+    #     #try:
+    #     event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+    #     db.session.commit()
+    #     flash('Your cane make event!')
+    #     return redirect(url_for('events.index'))
+    #     #except:
+    #     #    redirect('index') # create!!!
 
     q = request.args.get('q')
     page = request.args.get('page')
@@ -74,7 +121,7 @@ def index():
         
     pages = events.paginate(page=page, per_page=app.config['POSTS_PER_PAGE'])
 
-    return render_template('events/index.html', form=form, pages=pages)
+    return render_template('events/index.html', pages=pages)
 
 
 @events.route('/<slug>')
