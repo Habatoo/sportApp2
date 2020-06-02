@@ -30,3 +30,5 @@
 2020-05-28 23:48:26,644 [INFO] - btb_Api:User 'new' logout.
 2020-05-29 17:43:09,335 [INFO] - btb_Api:User 'new' login.
 2020-05-31 10:59:07,528 [INFO] - btb_Api:User 'new' login.
+2020-06-02 19:06:13,412 [INFO] - btb_Api:User 'cat' login.
+2020-06-02 19:07:17,430 [INFO] - btb_Api:User 'cat' edit event 'cat event'.

@@ -1,6 +1,6 @@
 {% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} New event {% endblock %} {% block content %}
 <br> New event search place:
-<form id="upload-form" action="{{ url_for('events.event_search') }}" method="GET">
+<form id="upload-form" action="{{ url_for('events.event_new') }}" method="GET">
     <input type="search" name="search" placeholder="Find here...">
     <input type="submit" value="Send">
 </form>
@@ -19,9 +19,12 @@
             <br> {{ form.event_time.label(class='control-label') }}<br> {{ form.event_time(class='form-control') }}<br> {% for error in form.event_time.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
 
-            <br> {{ form.event_place.label(class='control-label') }} {{ form.event_place(class='form-control') }}<br> {% for error in form.event_place.errors %}
+            <br> {{ form.event_place.label(class='control-label') }} {{ form.event_place(class='form-control') }}
+            <br> {% for error in form.event_place.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
-            <br> {{ form.event_geo.label(class='control-label') }}<br> {{ form.event_geo(class='form-control') }}<br> {% for error in form.event_geo.errors %}
+            <br> {{ form.event_geo.label(class='control-label') }} {{ form.event_geo(class='form-control') }}
+            <br>
+            <br> {% for error in form.event_geo.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}
             <br> {{ form.event_level.label(class='control-label') }}<br> {{ form.event_level(class='form-control') }}<br> {% for error in form.event_level.errors %}
             <span style="color: red;">[{{ error }}]</span> {% endfor %}

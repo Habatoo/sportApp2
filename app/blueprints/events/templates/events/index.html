@@ -1,5 +1,5 @@
 {% extends 'base.html' %} {% block title %} Blueprint event title {% endblock %} {% block content_title %} All events page {% endblock %} {% block content %}
-<br> <a href="{{ url_for('events.event_search') }}">make a New event</a>
+<br> <a href="{{ url_for('events.event_new') }}">make a New event</a>
 <hr> {% for event in pages.items %}
 <div class="main-content">
     <table>

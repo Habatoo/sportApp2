@@ -17,35 +17,42 @@ from app import db
 from app import log
 from app.models import *
 
-from geopy.geocoders import Nominatim
+try:
+    from geopy.geocoders import Nominatim
+except:
+    redirect('events.index')
+
 
 events = Blueprint('events', __name__, template_folder='templates')
 
-@events.route('/event_search', methods=['GET', 'POST'])
+@events.route('/event_new', methods=['GET', 'POST'])
 @login_required
-def event_search():
-    #form = EventForm()
-    form = EventForm(formdata=request.form)
+def event_new():
+    form = EventForm()
+    if request.args == '':
+        return redirect('')
     if request.method == 'GET':
-        try:
-            place = request.args
-            #print('place', place['search'])
-            geolocator = Nominatim(user_agent='habatoo@yandex.ru') 
-            location = geolocator.geocode(place.get('search', default = None))
-            if location:
-                newLocation = str(location.latitude) + str(", ") + str(location.longitude)
-                print(newLocation)
-                
-                location_geo = geolocator.reverse([location.latitude, location.longitude]) # 37.62, 55.75
-                address = location_geo.address
-                print(address)
-                #return redirect('events.index')
-
-            else:
-                print('no search')
-                #return redirect('events.index')
-        except:
-            pass
+        place = request.args
+        geolocator = Nominatim(user_agent='habatoo@yandex.ru') 
+        location = geolocator.geocode(place.get('search', default = None))
+        if location:
+            newLocation = str(location.latitude) + str(", ") + str(location.longitude)  
+            location_geo = geolocator.reverse([location.latitude, location.longitude]) # 37.62, 55.75
+            address = location_geo.address
+            event = Event(
+            event_title=None, 
+            event_body=None, 
+            event_time=None,
+            event_place = address,
+            event_geo = newLocation,
+            event_level = None,
+            event_author=current_user)
+            form = EventForm(
+                formdata=request.form, obj=event)
+            return render_template('events/new_event.html', form=form)
+        else:
+            print('no search')
+            return redirect('')          
 
     if form.validate_on_submit():
         event = Event(
@@ -63,7 +70,6 @@ def event_search():
         return redirect(url_for('events.index'))
         #except:
         #    redirect('index') # create!!!
-    #form = EventForm(formdata=request.form, obj=eve)
     return render_template('events/new_event.html', form=form)
 
 @events.route('/<slug>/edit', methods=['GET', 'POST'])
