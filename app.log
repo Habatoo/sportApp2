@@ -32,3 +32,22 @@
 2020-05-31 10:59:07,528 [INFO] - btb_Api:User 'new' login.
 2020-06-02 19:06:13,412 [INFO] - btb_Api:User 'cat' login.
 2020-06-02 19:07:17,430 [INFO] - btb_Api:User 'cat' edit event 'cat event'.
+2020-06-03 22:10:58,231 [INFO] - btb_Api:User 'cat' login.
+2020-06-03 22:18:31,486 [DEBUG] - btb_Api:user before: <User (transient 45670054856)>
+2020-06-03 22:18:31,514 [DEBUG] - btb_Api:user after: <User 8>
+2020-06-03 22:18:31,543 [DEBUG] - btb_Api:user after make folder: <User 8>
+2020-06-03 22:18:31,543 [INFO] - btb_Api:User 'pupsik' register.
+2020-06-03 22:18:57,122 [INFO] - btb_Api:User 'pupsik' login.
+2020-06-03 22:19:43,178 [INFO] - btb_Api:User 'pupsik' edit profile.
+2020-06-03 22:20:22,390 [INFO] - btb_Api:User 'pupsik' following user 'cat'.
+2020-06-03 22:33:47,771 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:36:52,237 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:39:19,481 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:39:33,701 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:41:23,704 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:41:47,300 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:42:28,320 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:42:36,717 [INFO] - btb_Api:User 'pupsik' edit photo 'pupsik' info.
+2020-06-03 22:46:43,433 [DEBUG] - btb_Api:Photo before db '<Photo 4>'.
+2020-06-03 22:46:43,463 [DEBUG] - btb_Api:Photo after db '<Photo 4>'.
+2020-06-03 22:46:43,469 [INFO] - btb_Api:User 'pupsik' edit photo info 'pupsik'.

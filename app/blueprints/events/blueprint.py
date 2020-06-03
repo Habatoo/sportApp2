@@ -99,24 +99,6 @@ def edit_event(slug):
 @events.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
-    # form = EventForm()
-    # if form.validate_on_submit():
-    #     event = Event(
-    #         event_title=form.event_title.data, 
-    #         event_body=form.event_body.data, 
-    #         event_time= form.event_time.data,
-    #         event_place = form.event_place.data,
-    #         event_geo = form.event_geo.data,
-    #         event_level = form.event_level.data,
-    #         event_author=current_user)
-    #     #try:
-    #     event.tags.append(Tag.query.filter_by(name=form.tags.data).first())
-    #     db.session.commit()
-    #     flash('Your cane make event!')
-    #     return redirect(url_for('events.index'))
-    #     #except:
-    #     #    redirect('index') # create!!!
-
     q = request.args.get('q')
     page = request.args.get('page')
     page = request.args.get('page', 1, type=int)

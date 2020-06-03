@@ -15,6 +15,7 @@ from .forms import PhotoForm
 
 from app import app
 from app import db
+from app import log
 from app.models import *
 
 import os
@@ -36,12 +37,17 @@ def edit_info(slug):
         photo.photo_description = form.photo_description.data
         try:
             photo.tags.append(Tag.query.filter_by(name=form.tags.data).first())
+            log.debug("Photo before db '%s'." % (photo))
             db.session.commit()
             flash('Your photo edited')
-            log.info("User '%s' edit photo '%s' info." % (current_user.username, photo.photo_title))
-            return redirect(url_for('photos.photo_info', slug=photo.slug))
+
+            photo = Photo.query.filter(Photo.id==slug).first()
+            log.debug("Photo after db '%s'." % (photo))
+            tags = photo.tags
+            log.info("User '%s' edit photo info '%s'." % (current_user.username, photo.photo_title))
+            return render_template('photos/photo_detail.html', photo=photo, tags=tags, user=current_user)
         except:
-           redirect('photos.index') 
+            redirect('photos.index') 
     form = PhotoForm(obj=photo)
     return render_template('photos/edit_info.html', form=form)           
 
