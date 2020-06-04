@@ -24,6 +24,7 @@ class Configuration(object):
     # MAX_CONTENT_LENGTH = 16 * 1024 * 1024
     ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
+    OAUTH_CREDENTIALS = os.environ.get('OAUTH_CREDENTIALS')
 
 
 class DevConfig(Configuration):

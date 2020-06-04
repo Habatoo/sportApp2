@@ -51,3 +51,4 @@
 2020-06-03 22:46:43,433 [DEBUG] - btb_Api:Photo before db '<Photo 4>'.
 2020-06-03 22:46:43,463 [DEBUG] - btb_Api:Photo after db '<Photo 4>'.
 2020-06-03 22:46:43,469 [INFO] - btb_Api:User 'pupsik' edit photo info 'pupsik'.
+2020-06-04 22:12:21,933 [INFO] - btb_Api:User 'habatoo' logout.
